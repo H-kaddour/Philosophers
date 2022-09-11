@@ -1,0 +1,5 @@
+Pseudo code for Philo:
+- first read the args for every var
+- check error if philo zero or something like that
+- create forks mutex
+- create philo thread and send them to a function where the magic gon happen of eat and sleep and and think and die
