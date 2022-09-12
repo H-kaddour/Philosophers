@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:18:34 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/10 18:17:07 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/12 11:47:42 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,21 @@ typedef struct	l
 	int	a;
 } t_l;
 
-void	*try()
+void	*try(void *data)
 {
+	int	*id;
 	int i;
+
 	i = 0;
-	while (i < 100)
-	{
+	id = (int *)data;
+	//while (i < 100)
+	//{
 		pthread_mutex_lock(&mutex);
-		i++;
-		x++;
+		printf("hey %d\n", *id);
+		//i++;
+		//x++;
 		pthread_mutex_unlock(&mutex);
-	}
+	//}
 	//printf("%d\n", x);
 	//printf("thread\n");
 	return (0);
@@ -41,23 +45,23 @@ int	main(void)
 	//pthread_t	th1;
 	//pthread_t	th2;
 	int	i;
-	pthread_t th[6];
+	pthread_t th[10];
 
 	i = 0;
 	//thread in a while loop
 	pthread_mutex_init(&mutex, NULL);
-	while (i < 6)
+	while (i < 10)
 	{
-		pthread_create(&th[i], NULL, try, NULL);
+		pthread_create(&th[i], NULL, try, &i);
 		i++;
 	}
 	i = 0;
-	while (i < 6)
+	while (i < 10)
 	{
 		pthread_join(th[i], NULL);
 		i++;
 	}
-	printf("%d\n", x);
+	//printf("%d\n", x);
 	pthread_mutex_destroy(&mutex);
 
 	//this one to specific what this thread gonna do

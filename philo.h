@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:19:23 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/11 20:17:01 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:57:06 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+//int	nn = 0;
+
 typedef struct	s_philo
 {
 	int		id;
 	int		num_eat;
 	long	last_meal;
-	pthread_t		th_philo[9];
+	pthread_t		th_philo;
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	r_fork;
+	struct s_philo	*next;
 } t_philo;
 
 typedef struct	s_data
@@ -40,12 +43,14 @@ typedef struct	s_data
 	int			n_time_philo_die;
 	int			chk_last_arg;
 	long		time;
+	long		p_time;
+	t_philo	*info;
 	pthread_mutex_t *forks;
-	t_philo	info;
 } t_data;
 
 /*********** Utils ***********/
-int	ft_atoi(const char *str);
-int	only_numbers(t_data *data);
+int		ft_atoi(const char *str);
+int		only_numbers(t_data *data);
+void	init_node(t_data *data);
 
 #endif
