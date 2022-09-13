@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:19:23 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/12 14:57:06 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:18:18 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct	s_data
 	long		time;
 	long		p_time;
 	t_philo	*info;
+	t_philo	*trav;
 	pthread_mutex_t *forks;
 } t_data;
 

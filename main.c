@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/12 15:14:44 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:08:24 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,55 @@ static int	get_time(void)
 void	msg(t_data *data, char *msg)
 {
 	data->p_time = get_time() - data->time;
-	usleep(1);
-	printf("%ld		%d		%s\n", data->p_time, data->info->id, msg);
+	//usleep(50);
+	printf("%ld		%d		%s\n", data->p_time, data->trav->id, msg);
 }
+
+void	lock_fork(t_data *data)
+{
+	if (data->trav->id % 2 == 0)
+	{
+		pthread_mutex_lock(&data->trav->r_fork);
+		msg(data, "has taken a fork");
+		pthread_mutex_lock(&data->trav->l_fork);
+		msg(data, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(&data->trav->l_fork);
+		msg(data, "has taken a fork");
+		pthread_mutex_lock(&data->trav->r_fork);
+		msg(data, "has taken a fork");
+	}
+}
+
+void	unlock_fork(t_data *data)
+{
+	if (data->trav->id % 2 == 0)
+	{
+		pthread_mutex_unlock(&data->trav->r_fork);
+		pthread_mutex_unlock(&data->trav->l_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(&data->trav->l_fork);
+		pthread_mutex_unlock(&data->trav->r_fork);
+	}
+}
+
+//void	ft_usleep(t_data *data)
+//{
+//
+//}
 
 void	eat(t_data *data)
 {
-	pthread_mutex_lock(&data->info->l_fork);
-	msg(data, "has taken a fork");
-	pthread_mutex_lock(&data->info->r_fork);
-	msg(data, "has taken a fork");
+	lock_fork(data);
 	msg(data, "is eating");
-	pthread_mutex_unlock(&data->info->l_fork);
-	pthread_mutex_unlock(&data->info->r_fork);
+	data->trav->last_meal = get_time();
+	//ft_usleep(data);
+	data->trav->num_eat++;
+	unlock_fork(data);
 }
 
 void	*the_usual(void *d)
@@ -97,7 +133,7 @@ void	*the_usual(void *d)
 	//	i++;
 	//	nn++;
 	//}
-	//printf("hey %d\n", data->info->id);
+	//printf("hey %d\n", data->trav->id);
 	//pthread_mutex_unlock(&data->info->l_fork);
 	//pthread_mutex_unlock(&data->info->r_fork);
 	//printf("hey %d", data->info.id);
@@ -107,49 +143,47 @@ void	*the_usual(void *d)
 void	init_thread_helper(t_data *data)
 {
 	int	i;
-	t_philo	*trav;
+	//t_philo	*trav;
 
 	i = 0;
-	trav = data->info;
+	data->trav = data->info;
 	data->time = get_time();
 	//printf("%ld\n", data->time);
 	//while (i < data->n_philo)
 	//while (trav)
 	while (i < data->n_philo)
 	{
-		trav->id = i + 1;
-		trav->l_fork = data->forks[i];
+		data->trav->id = i + 1;
+		data->trav->l_fork = data->forks[i];
 		if (i == 0)
-			data->info->r_fork = data->forks[data->n_philo - 1];
+			data->trav->r_fork = data->forks[data->n_philo - 1];
 		else
-			data->info->r_fork = data->forks[i - 1];
-		//if (i == data->n_philo)
+			data->trav->r_fork = data->forks[i - 1];
+		//if (i == data->n_philo - 1)
 		//	data->info->r_fork = data->forks[0];
 		//else
 		//	data->info->r_fork = data->forks[i + 1];
-		trav->num_eat = 0;
-		trav->last_meal = 0;
-		pthread_create(&trav->th_philo, NULL, &the_usual, data);
+		data->trav->num_eat = 0;
+		data->trav->last_meal = 0;
+		//pthread_create(&trav->th_philo, NULL, &the_usual, data);
+		pthread_create(&data->trav->th_philo, NULL, &the_usual, data);
 		//pthread_join(data->info.th_philo[i], NULL);
-		trav = trav->next;
+		data->trav = data->trav->next;
 		i++;
 	}
 	i = 0;
-	trav = data->info;
+	data->trav = data->info;
 	while (i < data->n_philo)
 	{
-		pthread_join(trav->th_philo, NULL);
+		pthread_join(data->trav->th_philo, NULL);
 		//pthread_mutex_destroy(&data->forks[i]);
-		trav = trav->next;
+		data->trav = data->trav->next;
 		i++;
 	}
 	i = 0;
-	trav = data->info;
 	while (i < data->n_philo)
 	{
-		//pthread_join(trav->th_philo, NULL);
 		pthread_mutex_destroy(&data->forks[i]);
-		trav = trav->next;
 		i++;
 	}
 	//printf("%d\n", nn);
