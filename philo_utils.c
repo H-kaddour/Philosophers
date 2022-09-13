@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:40:19 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/12 14:21:44 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/13 11:12:21 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,17 @@ int	only_numbers(t_data *data)
 	return (0);
 }
 
-void	init_node(t_data *data)
+t_philo	*init_node(t_data *data)
 {
 	int	i;
 	t_philo	*head;
 	t_philo	*node;
+	t_philo	*tmp;
 
 	i = 1;
 	head = malloc(sizeof(t_philo));
-	data->info = head;
+	//data->info = head;
+	tmp = head;
 	head->next = NULL;
 	while (i < data->n_philo)
 	{
@@ -75,4 +77,5 @@ void	init_node(t_data *data)
 		i++;
 	}
 	head->next = NULL;
+	return (tmp);
 }

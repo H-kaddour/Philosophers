@@ -6,7 +6,7 @@
 #    By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/11 11:48:17 by hkaddour          #+#    #+#              #
-#    Updated: 2022/09/11 12:05:34 by hkaddour         ###   ########.fr        #
+#    Updated: 2022/09/13 11:53:45 by hkaddour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -I $(HEADER)
 
 clean:
-	rm -rf *.o
-#rm -rf $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -r $(NAME)
