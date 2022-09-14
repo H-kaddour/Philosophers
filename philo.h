@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:19:23 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/13 13:34:21 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:14:05 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ typedef struct	s_data
 	int			t_die;
 	int			t_eat;
 	int			t_sleep;
-	int			n_time_philo_die;
+	int			n_time_philo_eat;
 	int			chk_last_arg;
-	long		time;
+	int			chk_t_eat;
+	long		start_time;
 	long		p_time;
 	int			stop;
+	pthread_t	dead;
+	pthread_mutex_t	msg;
 	pthread_mutex_t *forks;
 } t_data;
 
@@ -40,6 +43,7 @@ typedef struct	s_philo
 	int							id;
 	int							num_eat;
 	long						last_meal;
+	//maybe here i should take a time of starting dial thread for dying time
 	t_data					*data;
 	pthread_t				th_philo;
 	pthread_mutex_t	l_fork;
