@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:19:23 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/14 16:14:05 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/15 09:27:58 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ typedef struct	s_philo
 } t_philo;
 
 /*********** Utils ***********/
-int		ft_atoi(const char *str);
-int		only_numbers(t_data *data);
+int			ft_atoi(const char *str);
+int			only_numbers(t_data *data);
 t_philo	*init_node(t_data *data);
+int			ft_strcmp(const char *s1, const char *s2);
 
 #endif

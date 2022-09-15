@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:40:19 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/13 11:12:21 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/15 09:26:11 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,14 @@ t_philo	*init_node(t_data *data)
 	}
 	head->next = NULL;
 	return (tmp);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 == *s2 && *s1 && *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
