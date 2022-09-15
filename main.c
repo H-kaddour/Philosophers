@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/14 16:26:41 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/15 08:57:46 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,14 +148,14 @@ void	*the_usual(void *p)
 	philo = (t_philo *) p;
 	//here an infinity loop and check if the thread is dead to break
 	//another mutex if u wanna write a msg of sleep or some like that
-	//while (philo->data->stop != 1)
-	//{
+	while (philo->data->stop == 0)
+	{
 		eat(philo);
 		goto_sleep(philo);
 		msg(philo, "is thinking");
-		//if (philo->data->stop == 1)
-		//	break ;
-	//}
+		if (philo->data->stop == 1)
+			break ;
+	}
 	return (0);
 }
 
@@ -171,16 +171,18 @@ void	end_all_thread(t_philo *philo)
 		pthread_join(trav->th_philo, NULL);
 		trav = trav->next;
 	}
+	//pthread_join(trav->data->dead, NULL);
 	while (i < philo->data->n_philo)
 	{
 		pthread_mutex_destroy(&philo->data->forks[i]);
 		i++;
 	}
+	//pthread_mutex_destroy(&philo->data->msg);
 	//destroy the last mutex of msg
 	//here free all nodes
 }
 
-int	check_if_death(t_philo *philo)
+int	check_if_dead(t_philo *philo)
 {
 	long	time;
 
@@ -188,15 +190,15 @@ int	check_if_death(t_philo *philo)
 	{
 		if (philo->num_eat == philo->data->n_time_philo_eat)
 		{
-			printf("kids");
+			//printf("kids");
 			philo->data->stop = 1;
 			return (1);
 		}
 	}
 	time = get_time() - philo->data->start_time;
-	if (time == philo->data->t_die)
+	if (time >= philo->data->t_die)
 	{
-		printf("lala");
+		//printf("lala");
 		philo->data->stop = 1;
 		return (1);
 	}
@@ -214,10 +216,10 @@ void	*check_death(void *p)
 	trav = philo;
 	while (trav)
 	{
-		if (check_if_death(trav))
+		if (check_if_dead(trav))
 		{
-			printf("niggas in paris");
-			//msg(philo, "is dead");
+			//printf("niggas in paris");
+			msg(philo, "is dead");
 			return (0);
 		}
 		trav = trav->next;
@@ -250,6 +252,8 @@ void	init_thread_helper(t_data *data, t_philo *philo)
 		i++;
 	}
 	pthread_create(&data->dead, NULL, &check_death, philo);
+	//if (data->stop == 1)
+	//	pthread_join(data->dead, NULL);
 	//i should get a time when the threads start for dying
 	end_all_thread(philo);
 }
