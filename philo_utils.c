@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:40:19 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/15 09:26:11 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:30:17 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,42 @@ int	ft_strcmp(const char *s1, const char *s2)
 		s2++;
 	}
 	return ((unsigned char)*s1 - (unsigned char)*s2);
+}
+
+void	msg(t_philo *philo, char *msg)
+{
+	//usleep(1000);
+	philo->data->p_time = get_time() - philo->data->start_time;
+	//printf("%d\n", get_time());
+	//printf("%ld\n", philo->data->time);
+	//printf("%ld\n", philo->data->p_time);
+	pthread_mutex_lock(&philo->data->msg);
+	printf("%ld		%d		%s\n", philo->data->p_time, philo->id, msg);
+	//if (ft_strcmp(msg, "is dead"))
+	//	pthread_mutex_unlock(&philo->data->msg);
+	//else
+	//{
+	//	//exit(0);
+	//	return ;
+	//}
+	pthread_mutex_unlock(&philo->data->msg);
+	//if (philo->data->stop == 0)
+	//	pthread_mutex_unlock(&philo->data->msg);
+	//else
+	//{
+	//	//exit(0);
+	//	//pthread_mutex_destroy(&philo->data->msg);
+	//	return ;
+	//}
+}
+
+int	get_time(void)
+{
+	long		time;
+	struct timeval	recent_time;
+
+	gettimeofday(&recent_time, NULL);
+	time = (recent_time.tv_sec * 1000) + (recent_time.tv_usec / 1000);
+	//time = (recent_time.tv_sec * 1000 + recent_time.tv_usec) / 1000;
+	return (time);
 }

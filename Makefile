@@ -6,7 +6,7 @@
 #    By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/11 11:48:17 by hkaddour          #+#    #+#              #
-#    Updated: 2022/09/13 11:53:45 by hkaddour         ###   ########.fr        #
+#    Updated: 2022/09/15 15:56:00 by hkaddour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,9 @@ CC = cc
 HEADER = philo.h
 CFLAGS = -Wextra -Wall -Werror -g
 SRC = main.c\
+			eat.c\
+			parsing.c\
+			kill.c\
 			philo_utils.c
 OBJS = $(SRC:.c=.o)
 
