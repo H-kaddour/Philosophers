@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:40:19 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/15 16:30:17 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:43:44 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ void	msg(t_philo *philo, char *msg)
 	//	//exit(0);
 	//	return ;
 	//}
+	//if (philo->data->stop == 0)
+	//	printf("stop == 0\n");
+	//else
+	//	printf("stop == 1\n");
 	pthread_mutex_unlock(&philo->data->msg);
 	//if (philo->data->stop == 0)
 	//	pthread_mutex_unlock(&philo->data->msg);

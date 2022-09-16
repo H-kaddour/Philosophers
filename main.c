@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/16 14:26:09 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:44:44 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,21 @@ void	*the_usual(void *p)
 	philo = (t_philo *) p;
 	//here an infinity loop and check if the thread is dead to break
 	//another mutex if u wanna write a msg of sleep or some like that
-	//while (philo->data->stop != 1)
-	//{
+	while (philo->data->stop != 1)
+	{
 		eat(philo);
-		//if (philo->data->stop == 1)
-		//	return (0);
+		//printf("hey\n");
+		//printf("%d\n", philo->data->stop);
+		if (philo->data->stop == 1)
+			return (0);
 		goto_sleep(philo);
 		msg(philo, "is thinking");
 		//check_death(philo);
 		//printf("%d\n", philo->data->stop);
-		//if (philo->data->stop == 1)
-		//	return (0);
+		if (philo->data->stop == 1)
+			return (0);
 			//break ;
-	//}
+	}
 	return (0);
 }
 
@@ -51,22 +53,24 @@ void	init_thread_helper(t_data *data, t_philo *philo)
 	{
 		trav->id = i + 1;
 		trav->r_fork = data->forks[i];
-		if (i == 0)
-			trav->l_fork = data->forks[data->n_philo - 1];
-		else
-			trav->l_fork = data->forks[i - 1];
-		//if (i == data->n_philo - 1)
-		//	trav->l_fork = data->forks[0];
+		//if (i == 0)
+		//	trav->l_fork = data->forks[data->n_philo - 1];
 		//else
-		//	trav->l_fork = data->forks[i + 1];
+		//	trav->l_fork = data->forks[i - 1];
+		if (i == data->n_philo - 1)
+			trav->l_fork = data->forks[0];
+		else
+			trav->l_fork = data->forks[i + 1];
 		trav->num_eat = 0;
 		trav->last_meal = get_time();
+		trav->start_philo = get_time();
 		trav->data = data;
 		pthread_create(&trav->th_philo, NULL, &the_usual, trav);
-		usleep(30);
+		//usleep(30);
 		trav = trav->next;
 		i++;
 	}
+	//printf("im out %d\n", i);
 	//check_death(philo);
 	//pthread_create(&data->dead, NULL, &check_death, philo);
 	//i should get a time when the threads start for dying
@@ -105,14 +109,27 @@ int	main(int ac, char **av)
 			return (0);
 		philo = init_node(&data);
 		init_thread(&data, philo);
-		while (1)
+		init_thread_helper(&data, philo);
+		check_death(philo);
+		if (data.stop == 1)
 		{
-			//init_thread(&data, philo);
-			init_thread_helper(&data, philo);
-			check_death(philo);
-			if (data.stop == 1)
-				return (0);
+			end_all_thread(philo);
+			return (0);
 		}
+		//while (1)
+		//{
+		//	check_death(philo);
+		//	if (data.stop == 1)
+		//		return (0);
+		//}
+		//while (1)
+		//{
+		//	//init_thread(&data, philo);
+		//	//init_thread_helper(&data, philo);
+		//	check_death(philo);
+		//	if (data.stop == 1)
+		//		return (0);
+		//}
 		//fix death of 1 philo
 		end_all_thread(philo);
 	}

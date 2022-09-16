@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:19:23 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/15 15:50:14 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:29:53 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_philo
 	int							id;
 	int							num_eat;
 	long						last_meal;
+	long						start_philo;
 	//maybe here i should take a time of starting dial thread for dying time
 	t_data					*data;
 	pthread_t				th_philo;

@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:47:14 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/16 14:28:39 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:28:21 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,23 @@ int	check_if_dead(t_philo *philo)
 	if (philo->data->chk_last_arg == 1)
 	{
 		//if (philo->data->chk_t_eat == philo->data->n_time_philo_eat)
+		//if (philo->num_eat == philo->data->n_time_philo_eat)
+		//printf("%d == %d\n", philo->num_eat, philo->data->n_time_philo_eat);
 		if (philo->num_eat == philo->data->n_time_philo_eat)
 		{
-			//printf("kids");
+			//printf("ylh\n");
+			//tl3 chi msg
+			//printf("err eat\n");
+			//printf("%d == %d\n", philo->num_eat, philo->data->n_time_philo_eat);
 			philo->data->stop = 1;
+			msg(philo, "equal max meal");
 			return (1);
 		}
 	}
 	//time = get_time() - philo->data->start_time;
 	time = get_time() - philo->last_meal;
 	//if (time >= philo->data->t_die)
+	//check if the thread didn't eat and equal 0 time should - to start of that thread instead of last_meal
 	if (time > philo->data->t_die)
 	{
 		//printf("la\n");
@@ -48,7 +55,9 @@ void	*check_death(void *p)
 	i = 0;
 	philo = (t_philo *)p;
 	trav = philo;
-	while (trav)
+	//printf("just entered check death func\n");
+	//while (trav)
+	while (1)
 	{
 		if (check_if_dead(trav))
 		{
@@ -57,7 +66,10 @@ void	*check_death(void *p)
 			return (0);
 		}
 		trav = trav->next;
+		if (!trav)
+			trav = philo;
 	}
+	//printf("Im out of this fucn death\n");
 	return (0);
 }
 
