@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:19:23 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/16 16:29:53 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:35:48 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int			only_numbers(t_data *data);
 t_philo	*init_node(t_data *data);
 int			ft_strcmp(const char *s1, const char *s2);
 void		msg(t_philo *philo, char *msg);
-int			get_time(void);
+//int			get_time(void);
+long	get_time(void);
 
 /*********** Parsing ***********/
 int		parsing(t_data *data);
@@ -66,9 +67,11 @@ int		parsing(t_data *data);
 /*********** Eat ***********/
 void	eat(t_philo *philo);
 void	goto_sleep(t_philo *philo);
+void	ft_uusleep(long time);
 
 /*********** Kill ***********/
-void	*check_death(void *p);
+//void	*check_death(void *p);
+int	check_death(t_philo *philo);
 void	end_all_thread(t_philo *philo);
 
 

@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/16 16:44:44 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:39:06 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ void	*the_usual(void *p)
 	int	i;
 
 	i = 0;
-	philo = (t_philo *) p;
+	philo = (t_philo *)p;
 	//here an infinity loop and check if the thread is dead to break
 	//another mutex if u wanna write a msg of sleep or some like that
+	//while (24)
 	while (philo->data->stop != 1)
 	{
 		eat(philo);
 		//printf("hey\n");
-		//printf("%d\n", philo->data->stop);
+		//printf("******%d\n", philo->data->stop);
 		if (philo->data->stop == 1)
 			return (0);
 		goto_sleep(philo);
@@ -63,6 +64,7 @@ void	init_thread_helper(t_data *data, t_philo *philo)
 			trav->l_fork = data->forks[i + 1];
 		trav->num_eat = 0;
 		trav->last_meal = get_time();
+		//trav->last_meal = 0;
 		trav->start_philo = get_time();
 		trav->data = data;
 		pthread_create(&trav->th_philo, NULL, &the_usual, trav);
@@ -110,12 +112,17 @@ int	main(int ac, char **av)
 		philo = init_node(&data);
 		init_thread(&data, philo);
 		init_thread_helper(&data, philo);
-		check_death(philo);
-		if (data.stop == 1)
+		//check_death(philo);
+		if (check_death(philo))
 		{
 			end_all_thread(philo);
-			return (0);
+			return (-1);
 		}
+		//if (data.stop == 1)
+		//{
+		//	end_all_thread(philo);
+		//	return (0);
+		//}
 		//while (1)
 		//{
 		//	check_death(philo);
@@ -131,7 +138,7 @@ int	main(int ac, char **av)
 		//		return (0);
 		//}
 		//fix death of 1 philo
-		end_all_thread(philo);
+		//*end_all_thread(philo);
 	}
 	else
 		printf("Invalid number of arguments\n");

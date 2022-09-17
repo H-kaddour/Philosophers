@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:40:19 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/16 16:43:44 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/17 17:53:05 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 void	msg(t_philo *philo, char *msg)
 {
 	//usleep(1000);
-	philo->data->p_time = get_time() - philo->data->start_time;
+	//philo->data->p_time = get_time() - philo->data->start_time;
+	philo->data->p_time = get_time() - philo->start_philo;
 	//printf("%d\n", get_time());
 	//printf("%ld\n", philo->data->time);
 	//printf("%ld\n", philo->data->p_time);
@@ -120,14 +121,14 @@ void	msg(t_philo *philo, char *msg)
 	//	return ;
 	//}
 }
-
-int	get_time(void)
+//int	get_time(void)
+long	get_time(void)
 {
 	long		time;
 	struct timeval	recent_time;
 
 	gettimeofday(&recent_time, NULL);
 	time = (recent_time.tv_sec * 1000) + (recent_time.tv_usec / 1000);
-	//time = (recent_time.tv_sec * 1000 + recent_time.tv_usec) / 1000;
+	//time = (recent_time.tv_sec * 1000000 + recent_time.tv_usec) / 1000;
 	return (time);
 }

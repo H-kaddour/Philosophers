@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:35:50 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/16 16:37:40 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:16:47 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,31 @@ void	unlock_fork(t_philo *philo)
 	}
 }
 
+void	ft_uusleep(long time)
+{
+	long	t;
+
+	t = 0;
+	t = get_time();
+	while ((get_time() - t) < time)
+		usleep(50);
+	return ;
+}
+
 void	goto_sleep(t_philo *philo)
 {
 	//usleep(philo->data->t_sleep);
 	msg(philo, "is sleeping");
 	usleep(philo->data->t_sleep * 1000);
+	//ft_uusleep(philo->data->t_sleep);
 }
 
 void	eat(t_philo *philo)
 {
 	lock_fork(philo);
 	msg(philo, "is eating");
-	//if (philo->data->stop == 1)
-	//	return ;
+	if (philo->data->stop == 1)
+		return ;
 	philo->last_meal = get_time();
 	philo->num_eat++;
 	if (philo->data->chk_last_arg == 1)
@@ -69,6 +81,7 @@ void	eat(t_philo *philo)
 	//{
 	//	philo->data->chk_t_eat++;
 	//}
+	//ft_uusleep(philo->data->t_eat);
 	usleep(philo->data->t_eat * 1000);
 	//time_eat(philo);
 	//time_eat(philo);
