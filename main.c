@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/18 16:32:35 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:56:28 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_thread_helper(t_data *data, t_philo *philo)
 	data->stop = 0;
 	data->chk_t_eat = 0;
 	data->start_time = get_time();
-	//pthread_mutex_init(&data->msg, NULL);
+	pthread_mutex_init(&data->msg, NULL);
 	while (trav)
 	{
 		trav->id = i + 1;
@@ -135,7 +135,7 @@ int	main(int ac, char **av)
 		init_thread_helper(&data, philo);
 		if (check_death(philo))
 		{
-			//end_all_thread(philo);
+			end_all_thread(philo);
 			//printf("ylh 5erj\n");
 			return (0);
 		}

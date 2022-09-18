@@ -3,3 +3,4 @@ Pseudo code for Philo:
 - check error if philo zero or something like that
 - create forks mutex
 - create philo thread and send them to a function where the magic gon happen of eat and sleep and and think and die
+msg with color and protect malloc and thread protect and mutex too and makefile color and norminette free and var idont use and fuction

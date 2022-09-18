@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:47:14 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/18 16:25:14 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:21:24 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void	end_all_thread(t_philo *philo)
 	{
 		//printf("hna\n");
 		//unlock_fork(philo);
-		pthread_join(trav->th_philo, NULL);
+		pthread_detach(trav->th_philo);
+		//pthread_join(trav->th_philo, NULL);
 		//unlock_fork(philo);
 		trav = trav->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 11:40:19 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/18 16:37:11 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:18:12 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,16 @@ void	msg(t_philo *philo, char *msg)
 	//	printf("stop == 0\n");
 	//else
 	//	printf("stop == 1\n");
-	//pthread_mutex_unlock(&philo->data->msg);
-	if (philo->data->stop == 0)
-		pthread_mutex_unlock(&philo->data->msg);
-	else
-	{
-		//exit(0);
-		//pthread_mutex_destroy(&philo->data->msg);
-		return ;
-	}
+	pthread_mutex_unlock(&philo->data->msg);
+	//if (philo->data->stop == 0)
+	//	pthread_mutex_unlock(&philo->data->msg);
+	//else
+	//{
+	//	//exit(0);
+	//	//pthread_mutex_destroy(&philo->data->msg);
+	//	pthread_detach(philo->th_philo);
+	//	return ;
+	//}
 }
 //int	get_time(void)
 long	get_time(void)
