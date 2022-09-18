@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/17 18:39:06 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 09:34:06 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*the_usual(void *p)
 	//here an infinity loop and check if the thread is dead to break
 	//another mutex if u wanna write a msg of sleep or some like that
 	//while (24)
+	//usleep(30);
 	while (philo->data->stop != 1)
 	{
 		eat(philo);
@@ -35,6 +36,7 @@ void	*the_usual(void *p)
 		//printf("%d\n", philo->data->stop);
 		if (philo->data->stop == 1)
 			return (0);
+		//usleep(100);
 			//break ;
 	}
 	return (0);
@@ -68,7 +70,7 @@ void	init_thread_helper(t_data *data, t_philo *philo)
 		trav->start_philo = get_time();
 		trav->data = data;
 		pthread_create(&trav->th_philo, NULL, &the_usual, trav);
-		//usleep(30);
+		//usleep(100);
 		trav = trav->next;
 		i++;
 	}
@@ -116,7 +118,7 @@ int	main(int ac, char **av)
 		if (check_death(philo))
 		{
 			end_all_thread(philo);
-			return (-1);
+			return (0);
 		}
 		//if (data.stop == 1)
 		//{
@@ -138,7 +140,7 @@ int	main(int ac, char **av)
 		//		return (0);
 		//}
 		//fix death of 1 philo
-		//*end_all_thread(philo);
+		//end_all_thread(philo);
 	}
 	else
 		printf("Invalid number of arguments\n");

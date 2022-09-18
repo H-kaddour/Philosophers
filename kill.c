@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:47:14 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/17 18:35:26 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 09:18:52 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_if_dead(t_philo *philo)
 	}
 	//time = get_time() - philo->data->start_time;
 	time = get_time() - philo->last_meal;
-	printf("%ld\n", time);
+	//printf("%ld\n", time);
 	//if (time >= philo->data->t_die)
 	//check if the thread didn't eat and equal 0 time should - to start of that thread instead of last_meal
 	//if ((get_time() - philo->last_meal) >= philo->data->t_die)
@@ -62,7 +62,8 @@ int	check_death(t_philo *philo)
 	trav = philo;
 	//printf("just entered check death func\n");
 	//while (trav)
-	while (1)
+	//while (1)
+	while (trav)
 	{
 		//if (check_if_dead(trav))
 		//{
