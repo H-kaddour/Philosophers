@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/18 09:34:06 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:32:35 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ void	*the_usual(void *p)
 	//another mutex if u wanna write a msg of sleep or some like that
 	//while (24)
 	//usleep(30);
+	//if (philo->id % 2 == 0)
+	//	usleep(100);
 	while (philo->data->stop != 1)
 	{
+		if (philo->id % 2 == 0)
+			usleep(100);
 		eat(philo);
 		//printf("hey\n");
 		//printf("******%d\n", philo->data->stop);
@@ -52,25 +56,29 @@ void	init_thread_helper(t_data *data, t_philo *philo)
 	data->stop = 0;
 	data->chk_t_eat = 0;
 	data->start_time = get_time();
+	//pthread_mutex_init(&data->msg, NULL);
 	while (trav)
 	{
 		trav->id = i + 1;
-		trav->r_fork = data->forks[i];
+		//trav->r_fork = data->forks[i];
+		//trav->fork = data->forks[i];
+		pthread_mutex_init(&philo->fork, NULL);
 		//if (i == 0)
 		//	trav->l_fork = data->forks[data->n_philo - 1];
 		//else
 		//	trav->l_fork = data->forks[i - 1];
-		if (i == data->n_philo - 1)
-			trav->l_fork = data->forks[0];
-		else
-			trav->l_fork = data->forks[i + 1];
+		//if (i == data->n_philo - 1)
+		//	trav->l_fork = &data->forks[0];
+		//else
+		//	trav->l_fork = &data->forks[i + 1];
 		trav->num_eat = 0;
 		trav->last_meal = get_time();
 		//trav->last_meal = 0;
 		trav->start_philo = get_time();
 		trav->data = data;
+		trav->first = philo;
 		pthread_create(&trav->th_philo, NULL, &the_usual, trav);
-		//usleep(100);
+		//usleep(50);
 		trav = trav->next;
 		i++;
 	}
@@ -97,6 +105,17 @@ void	init_thread(t_data *data, t_philo *philo)
 	//init_thread_helper(data, philo);
 }
 
+//void	init_philo(t_data *data, t_philo *philo)
+//{
+//	t_philo	*trav;
+//
+//	trav = philo;
+//	while (trav)
+//	{
+//		trav = trav->next;
+//	}
+//}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -108,38 +127,18 @@ int	main(int ac, char **av)
 	{
 		data.args = &av[1];
 		data.len = ac;
-		//here check int max and min and " sjfkj"
 		if (!parsing(&data))
 			return (0);
 		philo = init_node(&data);
-		init_thread(&data, philo);
+		//init_philo(&data, philo);
+		//init_thread(&data, philo);
 		init_thread_helper(&data, philo);
-		//check_death(philo);
 		if (check_death(philo))
 		{
-			end_all_thread(philo);
+			//end_all_thread(philo);
+			//printf("ylh 5erj\n");
 			return (0);
 		}
-		//if (data.stop == 1)
-		//{
-		//	end_all_thread(philo);
-		//	return (0);
-		//}
-		//while (1)
-		//{
-		//	check_death(philo);
-		//	if (data.stop == 1)
-		//		return (0);
-		//}
-		//while (1)
-		//{
-		//	//init_thread(&data, philo);
-		//	//init_thread_helper(&data, philo);
-		//	check_death(philo);
-		//	if (data.stop == 1)
-		//		return (0);
-		//}
-		//fix death of 1 philo
 		//end_all_thread(philo);
 	}
 	else

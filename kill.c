@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:47:14 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/18 09:18:52 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:25:14 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ int	check_death(t_philo *philo)
 		//printf("");
 		//if (time >= philo->data->t_die)
 		//if ((get_time() - philo->last_meal) >= philo->data->t_die)
-		if (time >= philo->data->t_die)
+		if (time > philo->data->t_die)
 		{
+			//printf("%ld *** %d\n", time, philo->data->t_die);
 			philo->data->stop = 1;
 			msg(philo, "is dead");
 			return (1);
@@ -117,15 +118,57 @@ void	end_all_thread(t_philo *philo)
 	//pthread_join(trav->data->dead, NULL);
 	while (trav)
 	{
+		//printf("hna\n");
+		//unlock_fork(philo);
 		pthread_join(trav->th_philo, NULL);
+		//unlock_fork(philo);
 		trav = trav->next;
 	}
-	while (i < philo->data->n_philo)
+	trav = philo;
+	while (trav)
 	{
-		pthread_mutex_destroy(&philo->data->forks[i]);
-		i++;
+		pthread_mutex_destroy(&philo->fork);
+		trav = trav->next;
 	}
+	//while (i < philo->data->n_philo)
+	//{
+	//	pthread_mutex_destroy(&philo->data->forks[i]);
+	//	i++;
+	//}
 	pthread_mutex_destroy(&philo->data->msg);
 	//destroy the last mutex of msg
 	//here free all nodes
 }
+///
+//void    lock_fork(t_philo philo)
+//{
+//    if (philo->id != philo->data->n_philo - 1)
+//    {
+//        pthread_mutex_lock(&philo->data->forks[philo->id]);
+//        msg(philo, "has taken a fork");
+//        pthread_mutex_lock(&philo->data->forks[philo->id + 1]);
+//        msg(philo, "has taken a fork");
+//    }
+//    else
+//    {
+//        pthread_mutex_lock(&philo->data->forks[philo->id]);
+//        msg(philo, "has taken a fork");
+//        pthread_mutex_lock(&philo->data->forks[0]);
+//        msg(philo, "has taken a fork");
+//    }
+//}
+//
+//void    unlock_fork(t_philophilo)
+//{
+//    if (philo->id != philo->data->n_philo - 1)
+//    {
+//        pthread_mutex_unlock(&philo->data->forks[philo->id]);
+//        pthread_mutex_unlock(&philo->data->forks[philo->id + 1]);
+//    }
+//    else
+//    {
+//        pthread_mutex_unlock(&philo->data->forks[philo->id]);
+//        pthread_mutex_unlock(&philo->data->forks[0]);
+//    }
+//}
+///
