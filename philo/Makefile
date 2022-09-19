@@ -6,7 +6,7 @@
 #    By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/11 11:48:17 by hkaddour          #+#    #+#              #
-#    Updated: 2022/09/18 18:57:28 by hkaddour         ###   ########.fr        #
+#    Updated: 2022/09/19 08:58:50 by hkaddour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,29 +21,42 @@ SRC = main.c\
 			philo_utils.c
 OBJS = $(SRC:.c=.o)
 
-#colors and text of compiling
+BGreen=\033[1;32m
+BYellow=\033[1;33m
+BBlue=\033[1;34m
+BPink=\033[1;38;5;205m
+BRed=\033[1;31m
+BPurple=\033[1;35m
+
 all: $(NAME)
 
+$(NAME): tag $(OBJS)
+	@echo "$(BGreen)merge $(BBlue)$(SRC) $(LIB) $(BYellow)output $(BGreen)$(NAME)"
+	@$(CC) $(CFLAGS) $(OBJS) -o $@
+
+%.o: %.c
+	@echo "$(BGreen)compile $(BBlue)$^ $(BYellow)link $(BGreen)$(HEADER)"
+	@$(CC) $(CFLAGS) -c $< -I $(HEADER)
+
+tag:
+	@echo "$(BGreen)"
 	@echo "██████╗ ██╗  ██╗██╗██╗      ██████╗ ███████╗ ██████╗ ██████╗ ██╗  ██╗███████╗██████╗ ███████╗"
 	@echo "██╔══██╗██║  ██║██║██║     ██╔═══██╗██╔════╝██╔═══██╗██╔══██╗██║  ██║██╔════╝██╔══██╗██╔════╝"
 	@echo "██████╔╝███████║██║██║     ██║   ██║███████╗██║   ██║██████╔╝███████║█████╗  ██████╔╝███████╗"
 	@echo "██╔═══╝ ██╔══██║██║██║     ██║   ██║╚════██║██║   ██║██╔═══╝ ██╔══██║██╔══╝  ██╔══██╗╚════██║"
 	@echo "██║     ██║  ██║██║███████╗╚██████╔╝███████║╚██████╔╝██║     ██║  ██║███████╗██║  ██║███████║"
 	@echo "╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝"
+	@echo ""
 
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $^ -o $@
-
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -I $(HEADER)
 
 clean:
-	rm -rf $(OBJS)
+	@echo "$(BRed)Clean"
+	@rm -rf $(OBJS)
 
 fclean: clean
-	rm -r $(NAME)
+	@echo "$(BRed)Fclean"
+	@rm -r $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re tag

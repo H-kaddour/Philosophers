@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/18 18:35:31 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/19 09:05:52 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	*the_usual(void *p)
 	return (0);
 }
 
-static void	init_thread_helper(t_data *data, t_philo *philo)
+static void	init_thread(t_data *data, t_philo *philo)
 {
 	t_philo	*trav;
 	int		i;
@@ -39,7 +39,7 @@ static void	init_thread_helper(t_data *data, t_philo *philo)
 	trav = philo;
 	data->stop = 0;
 	data->chk_t_eat = 0;
-	if (pthread_mutex_init(&data->msg, NULL))
+	if (pthread_mutex_init(&data->msg, NULL) != 0)
 		return ;
 	while (trav)
 	{
@@ -70,7 +70,7 @@ int	main(int ac, char **av)
 		if (!parsing(&data))
 			return (0);
 		philo = init_node(&data);
-		init_thread_helper(&data, philo);
+		init_thread(&data, philo);
 		if (check_death(philo))
 		{
 			end_all_thread(philo);
