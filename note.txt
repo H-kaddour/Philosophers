@@ -4,3 +4,5 @@ Pseudo code for Philo:
 - create forks mutex
 - create philo thread and send them to a function where the magic gon happen of eat and sleep and and think and die
 msg with color and protect malloc and thread protect and mutex too and makefile color and norminette free and var idont use and fuction
+
+gad blan if philo still eating 500 ms and then death is 100 he should not die cuz he is eating other philo should die so a var of status of that philo should work just fine

@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:21:21 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/19 09:05:52 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/22 13:59:27 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static void	*the_usual(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	while (philo->data->stop != 1)
+	while (21)
 	{
 		if (philo->id % 2 == 0)
 			usleep(100);
 		eat(philo);
 		goto_sleep(philo);
 		msg(philo, "\e[95mis thinking");
-		if (philo->data->stop == 1)
-			return (0);
+		//if (philo->data->stop == 1)
+		//	return (0);
 	}
 	return (0);
 }
@@ -39,25 +39,22 @@ static void	init_thread(t_data *data, t_philo *philo)
 	trav = philo;
 	data->stop = 0;
 	data->chk_t_eat = 0;
-	if (pthread_mutex_init(&data->msg, NULL) != 0)
-		return ;
+	pthread_mutex_init(&data->msg, NULL);
 	while (trav)
 	{
 		trav->id = i + 1;
-		if (pthread_mutex_init(&philo->fork, NULL) != 0)
-			return ;
+		pthread_mutex_init(&philo->fork, NULL);
 		trav->num_eat = 0;
 		trav->last_meal = get_time();
 		trav->start_philo = get_time();
 		trav->data = data;
 		trav->first = philo;
-		if (pthread_create(&trav->th_philo, NULL, &the_usual, trav) != 0)
-			return ;
+		pthread_create(&trav->th_philo, NULL, &the_usual, trav);
 		trav = trav->next;
 		i++;
 	}
 }
-
+//id need stop
 int	main(int ac, char **av)
 {
 	t_data	data;

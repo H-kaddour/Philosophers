@@ -6,7 +6,7 @@
 /*   By: hkaddour <hkaddour@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:47:14 by hkaddour          #+#    #+#             */
-/*   Updated: 2022/09/19 08:59:52 by hkaddour         ###   ########.fr       */
+/*   Updated: 2022/09/22 14:01:22 by hkaddour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	end_all_thread(t_philo *philo)
 	trav = philo;
 	while (trav)
 	{
-		if (pthread_mutex_destroy(&philo->fork) != 0)
-			return ;
+		pthread_mutex_destroy(&philo->fork);
 		free(trav);
 		trav = trav->next;
 	}
-	if (pthread_mutex_destroy(&philo->data->msg) != 0)
-		return ;
+	pthread_mutex_destroy(&philo->data->msg);
 }
